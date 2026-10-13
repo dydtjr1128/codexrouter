@@ -1,4 +1,5 @@
 <!-- Title: type: concise English description of the resulting change. -->
+<!-- Follow AGENTS.md, Commit messages, for the final squash message. Do not paste this entire PR description into the commit body. -->
 
 ## Summary
 
@@ -15,6 +16,7 @@
 
 <!-- Use Closes only for an implementation issue fully completed by this PR on main. -->
 <!-- Use Refs for partial work, parents, or related issues. No issue: None: direct user request. -->
+<!-- Carry these Closes/Refs references into the final squash message after checking completion; ordinary commits use Refs. -->
 - Related issues:
 - [ ]
 
