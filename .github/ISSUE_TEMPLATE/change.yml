@@ -1,0 +1,88 @@
+name: Feature or improvement
+description: Propose a feature, performance improvement, refactor, or documentation change.
+labels: [enhancement, "priority:medium"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Write in English and describe an observable outcome before choosing an implementation.
+        Keep independently completable results separate. A direct implementation request does not require an issue.
+        During triage, use documentation instead of enhancement for a documentation-only proposal.
+
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: Two or three short bullets describing the need and intended result.
+    validations:
+      required: true
+
+  - type: textarea
+    id: current_state
+    attributes:
+      label: Current state and need
+      description: Who needs this, in what situation, and why is the current approach insufficient?
+    validations:
+      required: true
+
+  - type: textarea
+    id: target_state
+    attributes:
+      label: Desired result
+      description: Describe how behavior or the user's workflow should change.
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Approach and scope
+      description: Propose the smallest useful change. If the approach is unknown, state what needs investigation.
+      placeholder: |
+        - Proposed approach:
+        - Smaller alternatives considered:
+        - Included:
+        - Existing behavior to preserve:
+        - Excluded:
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      description: Use checkboxes for observable outcomes that demonstrate completion.
+      placeholder: |
+        - [ ] The proposed result can be demonstrated under the stated conditions.
+        - [ ] The specified existing behavior remains intact.
+    validations:
+      required: true
+
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence and compatibility
+      description: Include relevant versions, code locations, measurements, or official API documentation. Mark assumptions as unverified.
+
+  - type: textarea
+    id: flow_diagram
+    attributes:
+      label: Flow diagram
+      description: Optional Mermaid code for changes that benefit from a diagram. Distinguish current and proposed behavior.
+      render: mermaid
+
+  - type: textarea
+    id: relationships
+    attributes:
+      label: Related issues
+      description: List actual prerequisites and related work in this repository. Explain why a prerequisite is necessary.
+
+  - type: checkboxes
+    id: submission_checks
+    attributes:
+      label: Before submitting
+      options:
+        - label: I checked the current implementation, documentation, and existing issues for this proposal.
+          required: true
+        - label: I removed credentials and private account or conversation data from the proposal.
+          required: true

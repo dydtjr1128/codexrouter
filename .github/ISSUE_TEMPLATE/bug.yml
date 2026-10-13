@@ -1,0 +1,88 @@
+name: Bug report
+description: Report an incorrect behavior or regression with reproducible evidence.
+labels: [bug, "priority:medium"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Describe the observed failure in English. Include only the details needed to reproduce it.
+        Never include API keys, tokens, authorization headers, account identifiers, or private conversation content.
+        The default priority is medium and will be adjusted during triage.
+
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: Two or three short bullets covering the failure and its impact.
+      placeholder: |
+        - A configured route fails under the conditions below.
+        - The affected request cannot complete.
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual_behavior
+    attributes:
+      label: Actual behavior
+      description: What happened? Include redacted errors or observations when available.
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected_behavior
+    attributes:
+      label: Expected behavior
+      description: What should happen under the same conditions?
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction steps
+      description: Provide the smallest reproducer. If not reproducible, describe the available evidence.
+      placeholder: |
+        1. Prepare the following redacted configuration.
+        2. Perform the action.
+        3. Observe the result.
+    validations:
+      required: true
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Include relevant versions. Use unknown or not applicable where needed.
+      placeholder: |
+        - CodexRouter version or commit:
+        - Codex Desktop version:
+        - Operating system:
+        - Provider and model, if relevant:
+        - Authentication method (API key or subscription; no credentials):
+    validations:
+      required: true
+
+  - type: textarea
+    id: impact
+    attributes:
+      label: Impact and acceptance criteria
+      description: Who is affected, any workaround, and the observable result that would resolve the failure.
+      placeholder: |
+        - Impact and workaround:
+        - [ ] The reported failure no longer occurs under the reproduction conditions.
+
+  - type: textarea
+    id: relationships
+    attributes:
+      label: Related issues
+      description: Link any confirmed duplicate, prerequisite, or related issue in this repository.
+
+  - type: checkboxes
+    id: submission_checks
+    attributes:
+      label: Before submitting
+      options:
+        - label: I checked the current documentation and existing issues for this problem.
+          required: true
+        - label: I removed credentials, personal data, and unnecessary local paths from the report.
+          required: true

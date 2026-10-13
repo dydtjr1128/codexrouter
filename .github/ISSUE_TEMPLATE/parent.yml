@@ -1,0 +1,81 @@
+name: Parent issue
+description: Coordinate independently completable child issues toward a shared outcome.
+title: "[Parent] "
+labels: [enhancement, "priority:medium"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use a parent only when several independent results need a shared integration outcome.
+        A parent coordinates direct children and has no implementation PR of its own.
+        Use native sub-issues for containment and blocked-by for actual prerequisites; keep these relationships separate.
+        Several PRs for one acceptance criterion can stay in a single implementation issue.
+
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: Two or three short bullets describing the shared problem and outcome, in English.
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Current state and desired result
+      description: Describe the shared need, available evidence, and why separate child outcomes are necessary.
+    validations:
+      required: true
+
+  - type: textarea
+    id: scope
+    attributes:
+      label: Scope
+      placeholder: |
+        - Included:
+        - Existing behavior to preserve:
+        - Excluded:
+    validations:
+      required: true
+
+  - type: textarea
+    id: children
+    attributes:
+      label: Direct children and prerequisites
+      description: List only direct children. Use a working title before registration, then replace it with the issue number.
+      placeholder: |
+        | Child issue | Independent result | Actual prerequisite |
+        | --- | --- | --- |
+        | Issue number or working title | Observable outcome | None, or an issue and reason |
+
+        Integration check: what will be checked once the required children are complete.
+    validations:
+      required: true
+
+  - type: textarea
+    id: relationships
+    attributes:
+      label: Parent and other prerequisites
+      description: For a nested parent, state its direct parent and distinct integration outcome. Never use an ancestor as a prerequisite or create a dependency cycle.
+
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Integration acceptance criteria
+      description: State outcomes owned by this parent. A canceled or duplicate child does not count as completed implementation.
+      placeholder: |
+        - [ ] Required child outcomes are complete and any remaining scope is recorded.
+        - [ ] The shared result works across the child boundaries.
+        - [ ] Existing behavior specified above remains intact.
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: submission_checks
+    attributes:
+      label: Before submitting
+      options:
+        - label: I checked for an existing parent with the same goal.
+          required: true
+        - label: I separated containment from actual prerequisites and will link direct children only.
+          required: true
