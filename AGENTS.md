@@ -6,9 +6,9 @@
 | --- | --- |
 | Project | CodexRouter; repository slug: `codexrouter` |
 | Purpose | A local router that keeps Codex Desktop as the client and connects model providers and subscription account profiles. |
-| Current stage | Repository setup. No routing service, provider adapter, or account switching implementation exists. |
-| Product direction | [README.md](README.md) |
-| Language and runtime | Not selected. Choose after a minimal Codex integration experiment. |
+| Current stage | Design stage. No routing service, provider adapter, or account switching implementation exists. |
+| Product direction | [README.md](README.md); detailed contracts in [docs/design/README.md](docs/design/README.md) |
+| Language and runtime | TypeScript/Node.js recommended for the experiment; confirm production choices through the design's integration and packaging gates. |
 | Default branch | `main` |
 | Working branches | `feature/<short-topic>` or `feature/issue-<number>-<short-topic>` |
 | Merge strategy | Pull request with squash merge. |
