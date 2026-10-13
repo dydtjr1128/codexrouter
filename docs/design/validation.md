@@ -7,23 +7,23 @@ Status: planned. None of the runtime or live-provider checks below has been exec
 | Milestone | Independently useful result | Exit condition |
 | --- | --- | --- |
 | M0: connection experiment | Evidence that an unchanged Windows Codex Desktop can reach the intended local route | Catalog selection, credentials, full tool loop, continuation identity, cancellation, and native path constraints measured on an isolated test setup |
-| Pre-M1 runtime decision | A justified production-language/package choice | M0 findings plus packaged CLI secret-store access, OS IPC ownership, and lifecycle probes; record the decision and supported platform subset before M1 |
+| Pre-M1 runtime qualification | The selected Rust core has credible native boundaries and a distributable CLI | M0 findings plus packaged CLI secret-store access, OS IPC ownership, HTTP policy, and lifecycle probes; record the qualified platform subset before M1 |
 | M1: minimal router and CLI | One daemon, shared control contract, bounded ingress, immutable routes, explicit failures, native forwarding | Native path, CLI-only lifecycle, protected storage, and local trust controls pass; no API-adapter support claim yet |
 | M2: required API adapters | Claude and Gemini independently complete the qualified desktop workflow | Both satisfy the common acceptance matrix and provider-specific cases |
 | M3: explicit subscription profiles | Separately authorized profiles can be selected for new conversations | Supported enrollment/refresh, aliases/catalog publication, desktop restart/selection, identity binding, concurrent conversations, revocation, and account isolation pass |
 | Companion interface | Tray/settings control for accounts, selection, status, and recovery | Same daemon/control semantics as CLI, renderer isolation, concurrent actions, lifecycle and per-OS packaging pass |
 
-Choose a reversible experiment language before M0; confirm the production runtime/storage afterward. M2 can have separate Claude and Gemini implementation issues after the shared contract is stable; completion of one does not satisfy the other. M3 requires the authenticated identity and binding contract, not completion of unrelated provider features. The companion depends on the working control contract and gains account actions as M3 delivers them; it need not block M2. These are delivery milestones rather than automatic issue creation or mandatory PR ordering.
+Use the selected Rust core for M0 and qualify it before M1; choose physical storage from the measured continuation needs. M2 can have separate Claude and Gemini implementation issues after the shared contract is stable; completion of one does not satisfy the other. M3 requires the authenticated identity and binding contract, not completion of unrelated provider features. The Tauri companion depends on the working control contract and gains account actions as M3 delivers them; it need not block M2. These are delivery milestones rather than automatic issue creation or mandatory PR ordering.
 
 ## M0 experiment
 
 Use a separately authorized test configuration and disposable workspace. Preserve the actual user's settings and login. An implementation task must define and obtain any credentials it needs without placing them in the repository. Limit capture to the minimum sanitized metadata and fixtures necessary to answer these questions:
 
-1. Can the target desktop select truthful custom aliases and retain them through new chat, restart, and reopen? Does a native sign-in/quota gate block or substitute an external route before the router receives a request?
+1. Can the target desktop select truthful custom aliases and retain them through new chat, restart, and reopen? Does the picker persist `model`, and what proves that transition for ownership reconciliation? Does a native sign-in/quota gate block or substitute an external route before the router receives a request?
 2. Which exact bundled client version and catalog schema are in use? Which model metadata fields control tool format, context limits, reasoning, compaction, and migration?
-3. Does the user-level custom provider configuration work in both chosen credential modes over authenticated loopback? Are credentials supplied to a desktop launched outside a terminal?
-4. Which paths, query parameters, headers, body fields, and content encodings does the client send for model discovery, inference, retries, compaction, and cancellation?
-5. What reliable per-thread identity or qualified router-issued handle survives the tool loop and restart? Record reopen-key stability separately from forks. Can rollback/edit/regenerate be distinguished from an accidental stale replay? Can two threads sharing a root session be distinguished? If neither key nor handle works, stop M0. What proves the native principal if affinity is claimed?
+3. Does the user-level custom provider configuration work in both chosen credential modes over authenticated loopback? Does the daemon-owned launcher deliver the token after ordinary relaunch/sign-in/reboot, including desktop single-instance behavior? Using a synthetic marker, verify it is excluded from tool shells, MCP servers, and other enabled child-launch paths under the effective configuration. Record effects on other clients sharing that configuration.
+4. Which paths, query parameters, headers, body fields, and content encodings does the client send for model discovery, inference, retries, compaction, and cancellation? What request signal or verified launch-session association identifies the running client/bundled version, including after an update?
+5. What reliable per-thread identity or qualified router-issued handle survives the tool loop and restart? Which output/call IDs or acknowledgment signals survive full-history replay, text-only turns, cancellation, reopen, and compaction? Record reopen-key stability separately from forks. Can rollback/edit/regenerate be distinguished from an accidental stale replay? Can two threads sharing a root session be distinguished? If either required conversation identity or acknowledgment cannot be established, stop M0. What proves the native principal if affinity is claimed?
 6. Which tools are emitted in actual coding tasks: function, custom/freeform, grammar, parallel calls, MCP wrappers, and built-in tools? Which capability settings prevent unsupported requests?
 7. Does a minimal tool loop work on each selected native/Claude/Gemini model, including a second turn carrying opaque state? Can required provider state survive a client replay and restart without abusing another provider's fields?
 8. Does client cancellation close the upstream transport? Test cancellation after a completed call followed by the next user turn. Are implicit client retries and automatic model migration truly disabled?
@@ -31,26 +31,28 @@ Use a separately authorized test configuration and disposable workspace. Preserv
 
 Record a pass, failure, or unresolved result for every question. If a required gate fails, narrow the advertised scope or stop that milestone and revise the design. Do not replace the client, disguise a model, or broaden credential access to turn a failed experiment into a pass.
 
+Keep M0 to disposable probes of these boundaries: representative required tool formats and a minimal native-state replay on each route. It does not require the production store, complete control UI, packaged installers, every tool schema, or the full M2 failure matrix. Selecting Rust does not require promoting probe code into production; retain the sanitized evidence/fixtures and only reuse code that meets the later contract. A client-carried state mechanism avoids durable native payload storage only if it replaces the required restart, integrity, acknowledgment, and isolation guarantees; an opaque lookup handle alone does not do so.
+
 ## Common acceptance matrix
 
 Run each applicable case for native, Claude, Gemini, and later managed subscription routes. A local mock test is evidence for the translator only; a live API test is not desktop E2E evidence.
 
 | Area | Cases and observable evidence |
 | --- | --- |
-| Route identity | Selected alias resolves to the exact upstream model/profile revision; unknown/retired aliases fail; catalog migrations do not bypass the router |
+| Route identity | Selected alias resolves to the exact upstream model/profile revision; unknown/unavailable aliases fail; native model rewrite/retirement; static and discovered catalogs use one generation; key replacement through catalog publication/restart preserves old-chat aliases until their profiles become unavailable |
 | Authentication | Missing/wrong local token rejected before upstream; API keys go only to their destination; native headers go only to native backend |
-| Streaming | Fragmented UTF-8, text chunks, multiple items, recognized usage and absent usage, one correct terminal/item outcome, long buffered tool arguments with qualified keepalive behavior |
+| Streaming | Fragmented UTF-8, text chunks, multiple items, recognized usage and absent usage, one correct terminal/item outcome, long buffered tool arguments with qualified keepalive behavior, lossless native payload values around permitted routing rewrites |
 | Tools | Read-only tool and final answer; create/patch a disposable file through normal Codex approval, read it back, and verify exact content and one execution; two tool turns; parallel results; custom quotes/newlines; invalid/duplicate/orphan calls |
 | Constraints | Unsupported schema, strictness, grammar, tool choice, image, hosted tool, and reasoning options rejected before dispatch |
 | Continuation | Second user turn, full-history replay, response-ID path, exact native prefix, no duplicate history, alias conflict, acknowledged rollback/edit/regenerate, immediate and ordinary compaction, pending-tool compaction error, inherited-state fork error, partially delivered parallel calls |
-| Concurrency | Two conversations on different profiles; serialized same-binding updates; conflicting resume rejected; no cross-binding payload lookup/import; optional same-installation ID metadata used only for error classification |
-| Lifecycle | Restart before/after state commit, recover acknowledged vs proven unexposed vs delivery-unknown tentative turns without repeating tools, late results rejected after branch abandonment, expiry, corrupt/full storage, active-state quota pressure |
+| Concurrency | Hold one request upstream and submit another for the same binding/parent: exactly one upstream dispatch, no executable output for the rejected overlap, and an independent binding on another profile still proceeds; no cross-binding payload lookup/import; optional same-installation ID metadata used only for error classification |
+| Lifecycle | Restart before/after state commit, key/state recovery after logout/reboot, recover acknowledged vs proven unexposed vs delivery-unknown tentative turns without repeating tools, late results rejected after branch abandonment, expiry, corrupt/full storage, active-state quota pressure |
 | Cancellation | Before headers, during text, during tool arguments, after completed call, simultaneous terminal event; no implicit resubmission |
-| Failures | Provider 401/403/429/5xx, socket ambiguity, error after HTTP 200, truncated stream, timeout, limit, refusal/safety block |
+| Failures | Provider 401/403/429/5xx, socket ambiguity, error after HTTP 200, truncated stream, timeout, limit, refusal/safety block, text followed by typed refusal |
 | Retry boundary | Desktop and router retries disabled; no quota/account/model fallback; ambiguous request marked unknown rather than replayed |
-| Local trust | Unexpected Host/Origin, wildcard bind, cross-host redirect, arbitrary input URL, unauthorized administration, listener squatting in both credential modes, and token replacement after suspected takeover |
+| Local trust | Unexpected Host/Origin, wildcard bind, bounded headers/decoded bodies and slow clients, cross-host redirect, arbitrary input URL, unauthorized administration, listener squatting in both credential modes, token replacement after suspected takeover, and synthetic-token exclusion from enabled child-process environments |
 | Privacy | Headers, errors, logs, state, backups, and support output contain no unintended secrets or conversation content |
-| Control and platforms | One daemon; CLI/UI and external-file selection conflicts; ownership recovery; selection observation amid old-chat traffic; shared start/restore lock; no-tray/headless conditions; version mismatch blocks catalog routes including native, with update/restore recovery; packaged CLI secrets and coordinated updates per OS |
+| Control and platforms | Concurrent starters adopt one daemon; launcher/UI exit leaves routing available; CLI/UI, desktop-picker and external-file selection reconciliation; coherent uninstall after conflict; desired versus observed new-chat selection; launcher relaunch/single-instance behavior; shared-config client impact; shared start/restore lock and verified hung-process recovery; absent/unknown tray and headless conditions; unknown/mismatched client version blocks routes including native, with update/restore recovery; packaged CLI secrets and coordinated updates per OS |
 
 An execution test must use a harmless disposable fixture and the client's normal approval path. Never use a real repository mutation just to establish that an adapter emits a tool call.
 
@@ -93,7 +95,7 @@ For this documentation change, validation consists of consistency review, local-
 
 | Decision | Evidence needed | Default until resolved |
 | --- | --- | --- |
-| Runtime and packaging | Node/TypeScript experiment, clean-machine CLI package, measured lifecycle/resources and OS secret storage; compare a focused alternative only when needed | Recommended experiment stack only; no runtime/dependencies installed |
+| Runtime and packaging qualification | Rust integration slice, clean-machine CLI package, measured lifecycle/resources, OS secrets/IPC and HTTP policy; reconsider only under the recorded switch conditions | Rust selected, but no implementation or qualified package |
 | Desktop discovery/configuration | Actual catalog, alias visibility, native gates, launch environment | No installation command published |
 | Conversation identity | Stable key/handle and fork/reopen behavior | No profile-switching or stateful compatibility claim |
 | Native principal binding | Supported authenticated identity that survives refresh | No native account-pinned resume claim |
@@ -101,4 +103,4 @@ For this documentation change, validation consists of consistency review, local-
 | Physical state store and limits | Minimal required native state, atomic crash recovery, measured size/lifetime | No database or unbounded retention commitment |
 | Reasoning and compaction | Recognizable compaction boundary, no unresolved calls, safe new epoch, and successful continued coding | Stop ambiguous transitions; no silent signature removal |
 | Optional capabilities | Actual client demand and independent acceptance evidence | Explicitly unsupported |
-| Companion and OS coverage | CLI contract, tray/window lifecycle, renderer isolation, independent secret owner, target-client availability | Electron is the leading UI candidate; all platform support remains unverified |
+| Companion and OS coverage | CLI contract, Tauri WebView/tray/window lifecycle, renderer isolation, independent daemon and secret owner, target-client availability | Tauri 2/TypeScript selected; all platform support remains unverified |

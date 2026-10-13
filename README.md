@@ -45,7 +45,7 @@ Multiple subscription accounts belong in this project as a separate account-mana
 
 Subscription credentials and provider API keys are distinct authentication methods. API routes use the corresponding provider's API credentials. Additional subscription integrations need their own authentication and compatibility validation.
 
-TypeScript/Node.js is recommended for the first connection experiment, with an Electron tray/settings companion as the leading UI option. Rust, Python, and Go are evaluated alternatives. The production runtime, storage format, and credential integration remain subject to validation. Core/CLI and companion targets include Windows, macOS, and Linux; each requires independent qualification. Automatic account rotation and quota-based failover are outside the initial scope.
+Rust is selected for the daemon, CLI, and first connection experiment, with Tauri 2 and a TypeScript frontend for the tray/settings companion. Node/Electron, Python/Qt, and Go were evaluated; the [stack decision](docs/design/runtime-and-interfaces.md#stack-decision) records the tradeoffs and conditions for reconsideration. Runtime selection does not establish compatibility or packaged support. Storage format and credential integration still require qualification. Core/CLI and companion targets include Windows, macOS, and Linux; each requires independent validation. Automatic account rotation and quota-based failover are outside the initial scope.
 
 ## Repository workflow
 

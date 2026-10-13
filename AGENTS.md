@@ -8,7 +8,7 @@
 | Purpose | A local router that keeps Codex Desktop as the client and connects model providers and subscription account profiles. |
 | Current stage | Design stage. No routing service, provider adapter, or account switching implementation exists. |
 | Product direction | [README.md](README.md); detailed contracts in [docs/design/README.md](docs/design/README.md) |
-| Language and runtime | TypeScript/Node.js recommended for the experiment; confirm production choices through the design's integration and packaging gates. |
+| Language and runtime | Rust daemon/CLI and M0 experiment; Tauri 2 with a TypeScript frontend for the companion. Qualification remains required. |
 | Default branch | `main` |
 | Working branches | `feature/<short-topic>` or `feature/issue-<number>-<short-topic>` |
 | Merge strategy | Pull request with squash merge. |
