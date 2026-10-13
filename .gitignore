@@ -1,0 +1,17 @@
+# Local credentials and runtime state
+.env
+.env.*
+!.env.example
+/auth.json
+/.codexrouter/
+
+# Temporary working files
+/work/
+*.log
+*.tmp
+*.swp
+
+# Operating system metadata
+.DS_Store
+Thumbs.db
+Desktop.ini

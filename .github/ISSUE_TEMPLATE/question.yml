@@ -1,0 +1,41 @@
+name: Question
+description: Ask about intended behavior, usage, or project direction.
+labels: [question]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Ask in English and include enough context to answer the question.
+        Do not attach credentials or private account or conversation data.
+
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: A short description of the topic.
+    validations:
+      required: true
+
+  - type: textarea
+    id: question
+    attributes:
+      label: Question and context
+      description: What are you trying to understand or accomplish? Include relevant versions if applicable.
+    validations:
+      required: true
+
+  - type: textarea
+    id: attempts
+    attributes:
+      label: What you have checked
+      description: Mention relevant project documentation, existing issues, or redacted observations.
+
+  - type: checkboxes
+    id: submission_checks
+    attributes:
+      label: Before submitting
+      options:
+        - label: I checked the README and existing issues for an answer.
+          required: true
+        - label: I removed credentials and private data from the question.
+          required: true

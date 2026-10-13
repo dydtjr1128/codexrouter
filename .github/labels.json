@@ -1,0 +1,72 @@
+[
+  {
+    "name": "bug",
+    "color": "d73a4a",
+    "description": "Incorrect behavior with a reproducible or evidenced failure."
+  },
+  {
+    "name": "enhancement",
+    "color": "a2eeef",
+    "description": "A new capability or an improvement to existing behavior."
+  },
+  {
+    "name": "regression",
+    "color": "e99695",
+    "description": "Previously working behavior is broken; use together with bug."
+  },
+  {
+    "name": "documentation",
+    "color": "0075ca",
+    "description": "Documentation, examples, or explanatory text as the primary outcome."
+  },
+  {
+    "name": "question",
+    "color": "d876e3",
+    "description": "A usage question or a request for clarification."
+  },
+  {
+    "name": "priority:critical",
+    "color": "b60205",
+    "description": "Immediate action for an active widespread outage, credential exposure, or irreversible data loss."
+  },
+  {
+    "name": "priority:high",
+    "color": "e36209",
+    "description": "A confirmed major defect or a blocker for required validation or release."
+  },
+  {
+    "name": "priority:medium",
+    "color": "fbca04",
+    "description": "Normal implementation or improvement work without demonstrated severe impact."
+  },
+  {
+    "name": "priority:low",
+    "color": "fef2c0",
+    "description": "A narrow improvement or documentation change that can safely wait."
+  },
+  {
+    "name": "area:codex",
+    "color": "1d76db",
+    "description": "Codex Desktop integration, configuration, and client compatibility."
+  },
+  {
+    "name": "area:providers",
+    "color": "0e8a16",
+    "description": "Provider API adapters, protocol translation, and capability support."
+  },
+  {
+    "name": "area:routing",
+    "color": "5319e7",
+    "description": "Local request routing, destination selection, and request lifecycle."
+  },
+  {
+    "name": "area:accounts",
+    "color": "006b75",
+    "description": "Account profiles, credential isolation, authentication, and account selection."
+  },
+  {
+    "name": "area:workflow",
+    "color": "bfdadc",
+    "description": "Repository conventions, issue and PR templates, labels, and development tooling."
+  }
+]
