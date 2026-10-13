@@ -51,16 +51,37 @@ Run checks appropriate to the actual change and report their results. For the cu
 
 There are currently no install, build, lint, or runtime test commands. Record a skipped check and its reason instead of inventing a passing result. When implementation introduces commands, update this section in the same PR. Do not add tests that only mirror prose or static configuration.
 
+## Commit messages
+
+- Use a short, single-line English Conventional Commit title such as `feat:`, `fix:`, `docs:`, or `chore:` followed by the actual result.
+- When a body is useful, leave one blank line after the title and write up to four short `-` bullets, usually two or three. Put one change on each line, with no blank lines between bullets. A title alone is sufficient for a trivial change.
+- Describe the actual change rather than line-count deltas, priority tags, work-round labels, external review attribution, unrelated cleanup, or a full validation transcript.
+- Put issue references after the bullets, separated by one blank line, with one reference per line. Use `Refs #<issue-number>` for implementation or related work in ordinary commits. Do not put issue references in the title or bullets; the PR number suffix in a squash title is separate.
+- Ordinary and intermediate commits use `Refs`, never closing keywords. A final squash commit that completes an implementation issue on `main` uses `Closes #<issue-number>`, matching the PR description. Keep parent, partial, and other related issues as `Refs`. Omit references when there is no related issue.
+- Keep commits focused. Do not add generated-by text, assistant signatures, co-author trailers, or conversation links.
+- Before the first commit of a task, check `git var GIT_AUTHOR_IDENT` and `git var GIT_COMMITTER_IDENT` against the repository's intended local identity. Correct an unintended tool identity before pushing.
+- Pass multiline messages with `git commit -F <file>` or stdin so newlines and literal text are preserved. Use `-m` for a title-only message.
+
+Example for a final squash commit that completes an implementation issue:
+
+```text
+fix: preserve the selected account (#<pr-number>)
+
+- Keep active conversations on their selected account
+- Apply account changes to new conversations
+
+Closes #<issue-number>
+```
+
 ## Git and pull requests
 
 - Work on a feature branch and submit changes through a PR targeting `main`. Do not push implementation changes directly to the default branch.
-- Use concise English Conventional Commit titles, for example `chore: initialize repository workflow` or `fix: preserve the selected account`.
-- Keep commits focused. Do not add generated-by text, assistant signatures, co-author trailers, or conversation links.
 - Use the PR template. Keep Summary to two or three short bullets and scale the remaining detail to the change.
 - A direct user request does not require a new issue. Write `None: direct user request` when appropriate.
-- Use `Refs #<number>` for related or partial work. Use `Closes #<number>` only when this PR completes the implementation issue's acceptance criteria on the default branch. Do not put closing keywords in commit messages.
-- Before an authorized merge, verify the repository, open PR, base branch, current head commit, diff, checks, and unresolved review feedback. Revalidate changes made after review and merge the verified head with `--match-head-commit`.
-- Squash merge with an English title and concise body. Confirm the merged result and local branch state afterward. Delete only the merged feature branch when it is no longer needed.
+- Use `Refs #<number>` for related or partial work. Use `Closes #<number>` in the PR description only when this PR completes the implementation issue's acceptance criteria on the default branch. If work spans several PRs, only the final completing PR uses `Closes`; verify the other required changes are already on `main`. Keep parent issues open until their integration outcome is confirmed separately.
+- Before an authorized merge, verify the repository, open PR, base branch, current head commit, diff, checks, unresolved review feedback, and the issue references against the final scope. Revalidate changes made after review and merge the verified head with `--match-head-commit`.
+- Use the PR title as GitHub's default squash title with an empty default body. Compose the final squash message explicitly using [Commit messages](#commit-messages), with a title of `type: concise result (#<pr-number>)`. Pass the title and body through `--subject` and `--body-file`; do not use the full PR description or concatenated branch commits as the body. Match each `Closes` and `Refs` reference to the final PR description.
+- After merging, verify the merged state, actual commit title and body, expected issue closure, and local branch state. Delete only the merged feature branch when it is no longer needed.
 - Report the resulting behavior, validation performed, and remaining limits. Keep unrun live-provider checks distinct from local validation.
 
 ## Issues and labels
