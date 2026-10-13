@@ -2,7 +2,7 @@
 
 A local router for Codex that connects multiple model providers and lets you switch between subscription accounts.
 
-**Status: repository setup only.** The routing service, provider adapters, and account switching are not implemented. There is no executable or installation procedure yet.
+**Status: design stage.** The routing service, provider adapters, and account switching are not implemented. There is no executable or installation procedure yet.
 
 ## Direction
 
@@ -26,6 +26,12 @@ flowchart LR
     class accounts future;
 ```
 
+## Detailed design
+
+The [design overview](docs/design/README.md) defines the desktop connection, immutable routes, and delivery boundaries. [Provider protocol](docs/design/protocol.md) covers streaming, tools, and conversation state; [accounts](docs/design/accounts.md) defines credential ownership and explicit profile selection; [runtime and interfaces](docs/design/runtime-and-interfaces.md) compares languages and proposes CLI plus tray/settings control; [delivery and validation](docs/design/validation.md) records acceptance gates.
+
+Claude and Gemini API adapters are required initial release targets. Managed ChatGPT subscription profiles follow as a separate milestone within this project, using independently authorized credentials. The existing desktop login and managed profiles have different authentication and continuity contracts.
+
 ## Design boundaries
 
 | Concern | Intended responsibility |
@@ -39,7 +45,7 @@ Multiple subscription accounts belong in this project as a separate account-mana
 
 Subscription credentials and provider API keys are distinct authentication methods. API routes use the corresponding provider's API credentials. Additional subscription integrations need their own authentication and compatibility validation.
 
-The implementation language, runtime, storage format, and credential integration have not been selected. Those decisions will follow a minimal Codex connection experiment. Automatic account rotation, quota-based failover, and a management UI are later decisions with no implementation commitment yet.
+TypeScript/Node.js is recommended for the first connection experiment, with an Electron tray/settings companion as the leading UI option. Rust, Python, and Go are evaluated alternatives. The production runtime, storage format, and credential integration remain subject to validation. Core/CLI and companion targets include Windows, macOS, and Linux; each requires independent qualification. Automatic account rotation and quota-based failover are outside the initial scope.
 
 ## Repository workflow
 
